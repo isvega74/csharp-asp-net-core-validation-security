@@ -1,15 +1,16 @@
-﻿using System;
+﻿using Microsoft.Extensions.Primitives;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace ConferenceTracker.Entities
 {
-    public class Speaker
+    public class Speaker : IValidatableObject
     {
         [Required]
         public int Id { get; set; }
-        
-        [Required] 
+
+        [Required]
         [DataType(DataType.Text)]
         [StringLength(100, MinimumLength = 2)]
         [Display(Name = "First name")]
@@ -33,7 +34,19 @@ namespace ConferenceTracker.Entities
         [DataType(DataType.PhoneNumber)]
         [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
-        
+
         public bool IsStaff { get; set; }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext context)
+        {
+            List<ValidationResult> ValidationResult = new List<ValidationResult>();
+            if (EmailAddress != null && EmailAddress.EndsWith("TechnologyLiveConference.com", StringComparison.InvariantCultureIgnoreCase))
+            {
+                var rejectedEmailAddress = new ValidationResult("Technology Live Conference staff should not use their conference email addresses.");
+                ValidationResult.Add(rejectedEmailAddress);
+            }
+            return ValidationResult;
+        }
+
     }
 }
