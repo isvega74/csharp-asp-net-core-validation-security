@@ -44,25 +44,25 @@ _The basis for validation in ASP.NET Core is DataAnnotations. They can be used t
       - `Description`
       
 _We also want to make sure the data submitted is the correct data type to help avoid problems when we're handling that data._
-- [ ] Add `DataType` attributes to all appropriate properties in our `Speaker` class.
-  - [ ] Add the `DataType` attribute with an argument of `DataType.Text` to the following properties:
+- [x] Add `DataType` attributes to all appropriate properties in our `Speaker` class.
+  - [x] Add the `DataType` attribute with an argument of `DataType.Text` to the following properties:
     - `FirstName`
     - `LastName`
-  - [ ] Add the `DataType` attribute with an argument of `DataType.MultilineText` to the `Description` property.
-  - [ ] Add the `DataType` attribute with an argument of `DataType.EmailAddress` to the `EmailAddress` property.
-  - [ ] Add the `DataType` attribute with an argument of `DataType.PhoneNumber` to the `PhoneNumber` property.
+  - [x] Add the `DataType` attribute with an argument of `DataType.MultilineText` to the `Description` property.
+  - [x] Add the `DataType` attribute with an argument of `DataType.EmailAddress` to the `EmailAddress` property.
+  - [x] Add the `DataType` attribute with an argument of `DataType.PhoneNumber` to the `PhoneNumber` property.
 
 _We should also ensure what is submitted adheres to the size expectations of our database by limiting the length of our strings._
-- [ ] Add `StringLength` attributes to all appropriate properties in our `Speaker` class.
-  - [ ] Add the `StringLength` attribute with a `MaximumLength` of `100`, and a `MinimumLength` of `2` to the following properties:
+- [x] Add `StringLength` attributes to all appropriate properties in our `Speaker` class.
+  - [x] Add the `StringLength` attribute with a `MaximumLength` of `100`, and a `MinimumLength` of `2` to the following properties:
     - `FirstName`
     - `LastName`
-  - [ ] Add the `StringLength` attribute with a `MaximumLength` of `500`, and a `MinimumLength` of `10` to the `Description` property.
+  - [x] Add the `StringLength` attribute with a `MaximumLength` of `500`, and a `MinimumLength` of `10` to the `Description` property.
 
 _Sometimes we need to validate things that are not built into `DataAnnotations`. In these cases we can programmatically do validation on models using the `IValidateObject` interface._ 
-- [ ] Using the `IValidatableObject` interface, setup our `Speaker` class to validate that our `EmailAddress` property isn't a `"Technology Live Conference"` email address.
-  - [ ] Set up our `Speaker` class to inherit the `IValidatableObject` interface. _Note: your code will not compile at this point, but will soon once the `Validate` method is implemented._
-  - [ ] Create a new method, `Validate`, with the following characteristics:
+- [x] Using the `IValidatableObject` interface, setup our `Speaker` class to validate that our `EmailAddress` property isn't a `"Technology Live Conference"` email address.
+  - [x] Set up our `Speaker` class to inherit the `IValidatableObject` interface. _Note: your code will not compile at this point, but will soon once the `Validate` method is implemented._
+  - [x] Create a new method, `Validate`, with the following characteristics:
     - Add an access modifier of `public`.
     - Have a return type of `IEnumerable<ValidationResult>`.
     - Add a parameter of type `ValidationContext`.
@@ -72,28 +72,28 @@ _Sometimes we need to validate things that are not built into `DataAnnotations`.
     - Finally, it returns the `List<ValidationResult>` variable.
 
 _While we've set up the `DataAnnotations` needed for our validation, we still have to actually wire it up on our frontend. This client side validation helps reduce server load by preventing invalid submissions._
-- [ ] Set up client side validation on our `ConferenceTracker/Views/Speaker/Create.cshtml` view.
-  - [ ] At the end of our `Create` view, add a `Scripts` `section`.
+- [x] Set up client side validation on our `ConferenceTracker/Views/Speaker/Create.cshtml` view.
+  - [x] At the end of our `Create` view, add a `Scripts` `section`.
     - Add the section using `@section Scripts { }`.
     - Inside our `Scripts` section, use `@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}` to add `_ValidateScriptsPartial` to our `Scripts` section. _The `_ValidateScriptsPartial` is included in the template by default. It contains references to `jquery.validate`. ASP.NET Core uses `jquery.validate` for client side validation.)_
-  - [ ] Add a validation summary to our `Create` view's `Create` form.
+  - [x] Add a validation summary to our `Create` view's `Create` form.
     - Just inside our `Create` form, before it's first `div`, add a `div` tag with the following attributes:
       - `asp-validation-summary` set to `"ModelOnly"`
       - `class` set to `"text-danger"`
-  - [ ] For each of our `Create` form's inputs, add a `span` tag with the following attributes:
+  - [x] For each of our `Create` form's inputs, add a `span` tag with the following attributes:
     - `asp-validate-for` set to the same value as the `asp-for` of the corresponding `input`
     - `class` set to `"text-danger"`
 
 _Now that we have client side validation setup on our Speaker's Create form, we should also set up our server side validation. Client side validation is helpful, but shouldn't be relied on by itself as it is easy to bypass accidentally or maliciously._
-- [ ] Setup `ModelState` validation on our `SpeakerController`'s `HttpPost` `Create` action.
-  - [ ] Add a condition to our `SpeakerController`'s `HttpPost` `Create` action that checks `ModelState.IsValid`.
+- [x] Setup `ModelState` validation on our `SpeakerController`'s `HttpPost` `Create` action.
+  - [x] Add a condition to our `SpeakerController`'s `HttpPost` `Create` action that checks `ModelState.IsValid`.
     - If `true`, the action should perform the `Create` and `RedirectToAction` just like it did before.
     - If `false`, the action should `return` `View` with an argument of `speaker`. _ASP.NET Core will automatically carry any validation errors back to the client so long as you've provided the model that failed validation._
 
 _We may have both client side and `ModelState` validation, but we're still potentially vulnerable to cross-site request forgery and overposting attacks._
-- [ ] Setup the `HttpPost` `Create` action to validate an `AntiForgeryToken` and use `Bind` on our `speaker` parameter to prevent stuffing.
-  - [ ] On our `HttpPost` `Create` action, add the `ValidateAntiForgeryToken` attribute. _That's it! Anytime you make a `Form` in ASP.NET Core it, automatically adds a hidden input with the antiforgery token._
-  - [ ] Instead of just accepting `speaker` as is, we should use the `Bind` attribute with an argument of `"Id,FirstName,LastName,Description,EmailAddress,PhoneNumber"` to restrict the action to only accepting those properties. _Otherwise someone could maliciously alter their submission to set the `IsStaff` property._
+- [x] Setup the `HttpPost` `Create` action to validate an `AntiForgeryToken` and use `Bind` on our `speaker` parameter to prevent stuffing.
+  - [x] On our `HttpPost` `Create` action, add the `ValidateAntiForgeryToken` attribute. _That's it! Anytime you make a `Form` in ASP.NET Core it, automatically adds a hidden input with the antiforgery token._
+  - [x] Instead of just accepting `speaker` as is, we should use the `Bind` attribute with an argument of `"Id,FirstName,LastName,Description,EmailAddress,PhoneNumber"` to restrict the action to only accepting those properties. _Otherwise someone could maliciously alter their submission to set the `IsStaff` property._
 
 ## What Now?
 
