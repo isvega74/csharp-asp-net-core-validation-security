@@ -1,6 +1,6 @@
 # Improve Security of an ASP.NET Core Application Using Validation
 
-In this project we’ll take an existing conference application written in ASP.NET Core, and implement validation in order to better secure our application from bad data entry, as well as injection attacks.
+In this project weâ€™ll take an existing conference application written in ASP.NET Core, and implement validation in order to better secure our application from bad data entry, as well as injection attacks.
 
 # Setup the Application
 
@@ -36,7 +36,7 @@ __Note:__ This isn't the only way to accomplish implementation. However, this is
 _Validation has two important security concerns: the first is ensuring data integrity which prevents the submission of incomplete or bad data, and the second is preventing malicious efforts such as forgery and injection attacks._
 
 _The basis for validation in ASP.NET Core is DataAnnotations. They can be used to facilitate front end validation, ModelState validation, and database validation. As such, we'll make DataAnnotations available to our model, and setup properties that we want to be not-`null`._
-- [ ] In our `Speaker` class at `ConferenceTracker/Entities/`, add `Required` attributes where appropriate. _Note: `Required` is part of `System.ComponentModel.DataAnnotations` which we already have a `using` directive for. Usually you'll need to add this yourself._
+- [x] In our `Speaker` class at `ConferenceTracker/Entities/`, add `Required` attributes where appropriate. _Note: `Required` is part of `System.ComponentModel.DataAnnotations` which we already have a `using` directive for. Usually you'll need to add this yourself._
     - [ ] Add the `Required` attribute to the following properties:
       - `Id`
       - `FirstName`
